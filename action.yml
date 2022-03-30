@@ -1,0 +1,15 @@
+
+   
+name: Validation
+description: Check and validate metagraf.json with conftest
+
+runs:
+  using: composite
+  steps:
+    - run: pwd && ls
+    - name: conftest
+      uses: YubicoLabs/action-conftest@v2
+      with:
+        files: configfile.json
+        policy: policyfile.rego
+    - run: pwd && ls
