@@ -9,10 +9,16 @@ runs:
     - run: pwd && ls
       shell: bash
     - name: conftest
-      shell: bash
       uses: YubicoLabs/action-conftest@v2
       with:
         files: configfile.json
         policy: policyfile.rego
     - run: pwd && ls
       shell: bash
+    - name: echo action_path
+      run: echo "${{ github.action_path }}"
+      shell: bash
+    - name: ls action_path
+      run: ls "${{ github.action_path }}"
+      shell: bash
+      
