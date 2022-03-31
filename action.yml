@@ -14,9 +14,6 @@ runs:
     - name: ls action_path
       run: ls "${{ github.action_path }}"
       shell: bash
-    - name: ls github_home
-      run: ls /home/runner/work/_temp/_github_home
-      shell: bash
     - name: conftest
       uses: YubicoLabs/action-conftest@v2
       with:
