@@ -18,5 +18,5 @@ runs:
       uses: YubicoLabs/action-conftest@v2
       with:
         files: config.ini
-        policy: "${GITHUB_ACTION_PATH}/policy/ini.rego"
+        policy: ${GITHUB_ACTION_PATH}/policy/ini.rego
       
