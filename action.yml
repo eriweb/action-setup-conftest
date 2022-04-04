@@ -1,22 +1,8 @@
 
    
 name: Validation
-description: Check and validate metagraf.json with conftest
+description: Install and run conftest
 
 runs:
-  using: composite
-  steps:
-    - run: pwd && ls
-      shell: bash
-    - name: echo action_path
-      run: echo "${{ github.action_path }}"
-      shell: bash
-    - name: ls action_path
-      run: ls "${{ github.action_path }}"
-      shell: bash
-    - name: conftest
-      uses: YubicoLabs/action-conftest@v2
-      with:
-        files: config.ini
-        policy: ${GITHUB_ACTION_PATH}/policy/ini.rego
-      
+  using: 'node16'
+  main: 'dist/index.js'
