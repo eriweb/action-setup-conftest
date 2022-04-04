@@ -7,19 +7,13 @@
   "author": "Erik Weber <erik.weber@norsk-tipping.no>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "pack": "ncc build lib/run.js -m",
-    "dist": "yarn build && yarn run pack"
+    "build": "ncc build src/index.js -m"
   },
   "dependencies": {
     "@actions/core": "^1.6.0",
-    "@actions/exec": "^1.1.1",
-    "@actions/github": "^5.0.1",
     "@actions/tool-cache": "^1.7.2"
   },
   "devDependencies": {
-    "@types/node": "^17.0.23",
-    "@vercel/ncc": "^0.33.3",
-    "typescript": "^4.6.3"
+    "@vercel/ncc": "^0.33.3"
   }
 }

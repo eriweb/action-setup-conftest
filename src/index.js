@@ -1,13 +1,6 @@
-import * as core from "@actions/core"
-import * as tc from "@actions/tool-cache"
-import { exec } from "@actions/exec"
+const core = require('@actions/core')
+const tc = require('@actions/tool-cache')
 
-export async function run() {
-    console.log('hello')
-    await install()
-    await execute()
-
-}
 
 function getLatestVersion() {
     // TODO: get tags from github
@@ -20,15 +13,7 @@ function getLatestUrl() {
     return `https://github.com/open-policy-agent/conftest/releases/download/v${version}/conftest_${version}_Linux_x86_64.tar.gz`
 }
 
-async function execute() {
-    try {
-        await exec("conftest")
-    } catch(error) {
-        core.setFailed(getErrorMessage(error))
-    }
-    
-}
-async function install() {
+async function setup() {
     try {
         const conftestPath = await tc.downloadTool(getLatestUrl())
         const extractedFolder = await tc.extractTar(conftestPath)
@@ -37,11 +22,12 @@ async function install() {
         console.log(`conftest installed to ${cachedPath}`)
 
     } catch (error) {
-        core.setFailed(getErrorMessage(error))
+        core.setFailed(error.message)
     }
 }
 
-function getErrorMessage(error: unknown) {
-    if (error instanceof Error) return error.message
-    return String(error)
-}
+module.exports = setup
+
+if (require.main === module) {
+    setup();
+  }
