@@ -7,19 +7,25 @@ function getLatestVersion() {
     return "0.30.0"
 }
 
-function getLatestUrl() {
-    let version = getLatestVersion()
+function getLatestUrl(version) {
     // TODO: handle arch and OS
     return `https://github.com/open-policy-agent/conftest/releases/download/v${version}/conftest_${version}_Linux_x86_64.tar.gz`
 }
 
 async function setup() {
     try {
-        const conftestPath = await tc.downloadTool(getLatestUrl())
-        const extractedFolder = await tc.extractTar(conftestPath)
-        const cachedPath = await tc.cacheDir(extractedFolder, 'conftest', '0.30.0')
-        core.addPath(cachedPath)
-        console.log(`conftest installed to ${cachedPath}`)
+        const version = getLatestVersion()
+        let toolPath = tc.find('conftest', version)
+        if (toolPath) {
+            core.info(`Found conftest in tool cache at ${toolPath}`)
+        } else {
+            core.info(`Attempting to resolve and download conftest version ${version}`)
+            const conftestPath = await tc.downloadTool(getLatestUrl(version))
+            const extractedFolder = await tc.extractTar(conftestPath)
+            toolPath = await tc.cacheDir(extractedFolder, 'conftest', version)
+        }
+        core.addPath(toolPath)
+        console.log(`conftest installed to ${toolPath}`)
 
     } catch (error) {
         core.setFailed(error.message)
