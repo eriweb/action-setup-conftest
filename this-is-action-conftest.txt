@@ -1,5 +1,0 @@
-    - name: conftest
-      uses: YubicoLabs/action-conftest@v2
-      with:
-        files: configfile.json
-        policy: policyfile.rego
